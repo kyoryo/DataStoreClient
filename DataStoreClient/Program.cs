@@ -12,7 +12,6 @@ namespace DataStoreClient
     {
         static void Main()
         {
-
             RunAsync().Wait(); //calls RunAsync and block other operation until done.
         }
         static async Task RunAsync()
