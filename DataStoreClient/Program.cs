@@ -51,6 +51,15 @@ namespace DataStoreClient
                         Console.WriteLine("Id\tOwnerId\tTitle\tOrder\tCreatedAt\tLastUPdateTime");
                         foreach (var x in board.Data)
                         {
+                            Board b = new Board();
+                            b.Id = x.Id;
+                            b.OwnerId = x.OwnerId;
+                            b.Title = x.Title;
+                            b.Order = x.Order;
+                            b.CreatedAt = x.CreatedAt;
+                            b.LastUpdateTime = x.LastUpdateTime;
+                            db.Boards.Add(b);
+                            db.SaveChanges();
                             //Console.WriteLine(x.Id);
                             Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}",
                             x.Id, x.OwnerId, x.Title, x.Order, x.CreatedAt, x.LastUpdateTime);
