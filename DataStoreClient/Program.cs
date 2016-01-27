@@ -7,16 +7,19 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Data.SqlClient;
 using System.Data.Entity;
+using FluentScheduler;
+using System.Threading;
 
 namespace DataStoreClient
 {
-    class Program
+    class Program : Registry
     {
         static void Main()
         {
-            RunAsync().Wait(); //calls RunAsync and block other operation until done.
+            //TaskScheduler _tschedule = new TaskScheduler();
+            //RunBoardAsync().Wait(); //calls RunAsync and block other operation until done.
         }
-        static async Task RunAsync()
+        static async Task RunBoardAsync()
         {
             using (var client = new HttpClient())
             {
@@ -69,40 +72,25 @@ namespace DataStoreClient
                             
                         }
                     }
-                    
                 }
                 else { Console.WriteLine("Unsuccessful"); }
             }
         }
+
+        public void BoardSchedule()
+        {
+            // Schedule a simple task to run at a specific time
+            //Schedule(async () => await RunBoardAsync()).ToRunEvery(1).Days().At(21, 15);
+
+            // Schedule a more complex action to run immediately and on an monthly interval
+            Schedule(() =>
+            {
+                Console.WriteLine("Complex Action Task Starts: " + DateTime.Now);
+                Thread.Sleep(1000);
+
+                Console.WriteLine("Complex Action Task Ends: " + DateTime.Now);
+            }).ToRunNow().AndEvery(1).Months().OnTheFirst(DayOfWeek.Monday).At(3, 0);
+        }
         
-        //static void Connection(string[] args)
-        //{
-        //    SqlConnection _conn = new SqlConnection("server=SQLEXPRESS;database=DataStore");
-        //    SqlCommand _command  = _conn.CreateCommand();
-
-        //    try{
-        //        _conn.Open();
-        //        _command.CommandText = "CREATE DATABASE DataStore";
-        //        Console.WriteLine(_command.CommandText);
-
-        //        _command.ExecuteNonQuery();
-        //        Console.WriteLine("Database Created\nNow switching");
-        //        _conn.ChangeDatabase("DataStore");
-
-        //        _command.CommandText = "CREATE TABLE (Id integer, OwnerId string, Title string, Order integer)";
-        //        Console.WriteLine(_command.CommandText);
-        //        Console.WriteLine("Number of Rows affected is: {0}", _command.ExecuteNonQuery());
-
-        //    }
-        //    catch(SqlException ex){
-        //        Console.WriteLine(ex.ToString());   
-        //    }
-        //    finally {
-        //        _conn.Close();
-        //        Console.WriteLine("Conbnection closed");
-        //    }
-
-        //}
-       
     }
 }
