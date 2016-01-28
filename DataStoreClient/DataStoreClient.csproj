@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Control\BoardsControl.cs" />
     <Compile Include="Migrations\201601251040543_test.cs" />
     <Compile Include="Migrations\201601251040543_test.Designer.cs">
       <DependentUpon>201601251040543_test.cs</DependentUpon>

@@ -12,33 +12,30 @@ namespace DataStoreClient
     public class TaskScheduler: Registry //ITask, IRegisteredObject
     {
         
-        #region test
-        //private readonly object _lock = new object();
-        //private bool _shuttingDown;
-        //public TaskScheduler()
-        //{
-            
-        //    // Register this task with hosting evirontment 
-        //    // allow for more gracefull stop the task, in case IIS shutting down
-        //    HostingEnvironment.RegisterObject(this);
-        //}
-        //public void Execute()
-        //{
-        //    lock (_lock)
-        //    {
-        //        if (_shuttingDown)
-        //            return;
-        //        //code here
-        //    }
-        //}
-        //public void Stop(bool immediate)
-        //{
-        //    lock (_lock)
-        //    {
-        //        _shuttingDown = true;
-        //    }
-        //    HostingEnvironment.UnregisterObject(this);
-        //}
-        #endregion
+        private readonly object _lock = new object();
+        private bool _shuttingDown;
+        public TaskScheduler()
+        {   
+            Schedule<MyTask>().ToRunNow().AndEvery(20).Seconds();
+            // Register this task with hosting evirontment 
+            // allow for more gracefull stop the task, in case IIS shutting down
+            //HostingEnvironment.RegisterObject(this);
+        }
+        public class MyTask : ITask
+        {
+            public void Execute()
+            {
+                Console.WriteLine("ITask Task: " + DateTime.Now);
+                Console.WriteLine("Test jalan");
+            }
+        }
+        public class InlineTask : ITask
+        {
+            public void Execute()
+            {
+                Console.WriteLine("Inline Task: " + DateTime.Now);
+                
+            }
+        }
     }
 }
