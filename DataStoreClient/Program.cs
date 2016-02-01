@@ -23,7 +23,6 @@ namespace DataStoreClient
             TaskManager.AddTask(() =>
             {
                 Console.WriteLine("Inline task: " + DateTime.Now);
-                //throw new Exception("Hi");
             }, x => x.ToRunNow());
             //TaskScheduler _tschedule = new TaskScheduler();
             //RunBoardAsync().Wait(); //calls RunAsync and block other operation until done.
